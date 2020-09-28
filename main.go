@@ -116,6 +116,26 @@ func main() {
 			},
 		},
 		{
+			Name:    "apply",
+			Aliases: []string{"a"},
+			Usage:   "apply sourcefile to config",
+			Action: func(c *cli.Context) error {
+				var lang = c.String("lang")
+				var filename = "./" + c.Args().First()
+				if len(filename) == 2 {
+					return cli.Exit("specify filename", 1)
+				}
+				var tmpConfig = TmpConfig{Language: lang, Filename: filename}
+				tmpConfigViper.SetDefault("config", tmpConfig)
+				err := tmpConfigViper.WriteConfigAs(defaultConfigPath + tmpconfigFilename)
+				if err != nil {
+					return cli.Exit(err.Error(), 1)
+				}
+				fmt.Println("write tmpConfig to", defaultConfigPath+tmpconfigFilename)
+				return nil
+			},
+		},
+		{
 			Name:    "build",
 			Aliases: []string{"b"},
 			Usage:   "build",
