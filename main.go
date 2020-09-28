@@ -42,6 +42,7 @@ func readTempConfig() error {
 
 func build() error {
 	cmd := exec.Command("g++", tmpConfig.Filename)
+	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
@@ -53,7 +54,11 @@ func build() error {
 }
 
 func run() error {
-	err := exec.Command("./a.out").Run()
+	cmd := exec.Command("./a.out")
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
 	if err != nil {
 		return err
 	}
