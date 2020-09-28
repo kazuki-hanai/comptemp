@@ -1,0 +1,4 @@
+cpp:
+    templatePath: "cpp.temp"
+    buildCmd: "g++ -o {{.Out}} {{.Src}}"
+    runCmd: "./{{.Out}}"
